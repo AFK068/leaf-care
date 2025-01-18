@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package predict;
+
+service Predictor {
+    rpc Predict (PredictorRequest) returns (PredictorReply) {}
+}
+
+enum Plant {
+    PLANT_TOMATO = 0;
+    PLANT_CUCUMBER = 1;
+    PLANT_SALAD = 2;
+    PLANT_MELON = 3;
+    PLANT_WATERMELON = 4;
+    PLANT_STRAWBERRY = 5;
+    PLANT_PEPPER = 6;
+}
+
+message PredictorRequest {
+    repeated bytes image_data = 1;
+    Plant plant = 2;
+}
+
+message PredictorReply {
+    repeated string result = 1;
+}
