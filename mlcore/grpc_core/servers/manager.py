@@ -4,6 +4,7 @@ from concurrent import futures
 import grpc
 from dotenv import load_dotenv
 
+from settings import settings
 from grpc_core.protos.predict import predict_pb2_grpc
 from grpc_core.servers.services.predict import PredictService
 
@@ -16,7 +17,7 @@ class Server:
     def __init__(self) -> None:
         # Load the environment variables.
         load_dotenv()
-        self.server_address = f'{os.getenv("GRPC_HOST_LOCAL")}:{os.getenv("GRPC_PORT")}'
+        self.server_address = f"{settings.GRPC_HOST_LOCAL}:{settings.GRPC_PORT}"
 
         # Create the gRPC server.
         self.server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
