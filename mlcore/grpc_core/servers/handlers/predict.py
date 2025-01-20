@@ -9,7 +9,6 @@ class PredictHandler:
     """ 
     PredictHandler class is a handler for the prediction requests.
     """
-    
     _models = {}
 
     @classmethod
@@ -39,7 +38,20 @@ class PredictHandler:
         }
 
         return os.path.join(BASE_MODEL_PATH, model_paths[plant_type])
-            
+    
+    @staticmethod
+    def convert_to_class_probabilities(model_result):
+        image_results = predict_pb2.ImageResults()
+
+        for item in model_result:
+            class_prob = predict_pb2.ClassProbability(
+                class_name=item["class_name"],
+                probability=item["probability"]
+            )
+            image_results.results.append(class_prob)
+
+        return image_results
+        
     @staticmethod
     def run_model(model, image):
         model_result = model.predict(image, verbose=False)
