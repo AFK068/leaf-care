@@ -24,11 +24,14 @@ class PredictService(predict_pb2_grpc.PredictorServicer):
         for image_data in request.image_data:
             try:
                 image = PredictHandler.bytes_to_image(image_data)
+
                 model_result = PredictHandler.run_model(model, image)
-                results.append(model_result)
+                image_results = PredictHandler.convert_to_class_probabilities(model_result)
+
+                results.append(image_results)
                 
             except Exception:
-                logging.error(f"Prediction error: {image}")
-                return predict_pb2.PredictorReply(result="Error")
+                logging.error(f"Prediction error: {e}")
+                return predict_pb2.PredictorReply(result=[])
         
         return predict_pb2.PredictorReply(result=results)
