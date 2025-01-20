@@ -25,11 +25,6 @@ class PredictHandler:
         return Image.open(io.BytesIO(image_data))
     
     @staticmethod
-    def run_model(model, image):
-        model_result = model.predict(image)
-        return str(model_result[0].masks)
-    
-    @staticmethod
     def get_model_path(plant_type):
         BASE_MODEL_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir, os.path.pardir, os.path.pardir, 'models'))
 
@@ -44,3 +39,17 @@ class PredictHandler:
         }
 
         return os.path.join(BASE_MODEL_PATH, model_paths[plant_type])
+            
+    @staticmethod
+    def run_model(model, image):
+        model_result = model.predict(image, verbose=False)
+
+        if model_result[0].probs is None:
+            return []
+        
+        probs = model_result[0].probs.data
+        class_names = model.names 
+        
+        result = [{"class_name": class_names[i], "probability": float(probs[i])} for i in range(len(probs))]
+
+        return result
