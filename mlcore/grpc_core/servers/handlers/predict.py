@@ -1,18 +1,27 @@
-from PIL import Image
 import io
 import os
-from mlcore.grpc_core.protos.predict import predict_pb2
+
 from PIL import Image
 from ultralytics import YOLO
 
+from mlcore.grpc_core.protos.predict import predict_pb2
+
 class PredictHandler:
     """ 
-    PredictHandler class is a handler for the prediction requests.
+    PredictHandler class is a handler for processing prediction requests.
+
+    It manages loading models, running predictions, and converting results.
     """
-    _models = {}
+    _models = {} # Dictionary to store loaded models for each plant type.
 
     @classmethod
     def get_or_create_model(cls, plant_type):
+        """
+        Retrieves or creates a YOLO model for the specified plant type.
+
+        :param plant_type: The type of plant.
+        :return: A YOLO model instance for the specified plant type.
+        """
         if plant_type not in cls._models:
             path = cls.get_model_path(plant_type)
             cls._models[plant_type] = YOLO(path)
@@ -21,10 +30,22 @@ class PredictHandler:
     
     @staticmethod
     def bytes_to_image(image_data):
+        """
+        Converts raw image bytes into a PIL Image object.
+
+        :param image_data: Raw image data in bytes.
+        :return: A PIL Image object.
+        """
         return Image.open(io.BytesIO(image_data))
     
     @staticmethod
     def get_model_path(plant_type):
+        """
+        Returns the file path to the model for the specified plant type.
+
+        :param plant_type: The type of plant.
+        :return: The absolute path to the model file.
+        """
         BASE_MODEL_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir, os.path.pardir, os.path.pardir, 'models'))
 
         model_paths = {
@@ -41,8 +62,15 @@ class PredictHandler:
     
     @staticmethod
     def convert_to_class_probabilities(model_result):
+        """
+        Converts the raw model results into a structured format (protobuf message).
+
+        :param model_result: A list of dictionaries containing class names and probabilities.
+        :return: A protobuf message (predict_pb2.ImageResults) with the results.
+        """
         image_results = predict_pb2.ImageResults()
 
+        # Iterate over the model results and populate the protobuf message.
         for item in model_result:
             class_prob = predict_pb2.ClassProbability(
                 class_name=item["class_name"],
@@ -54,14 +82,24 @@ class PredictHandler:
         
     @staticmethod
     def run_model(model, image):
+        """
+        Runs the YOLO model on the provided image and returns the results.
+
+        :param model: A YOLO model instance.
+        :param image: A PIL Image object to run predictions on.
+        :return: A list of dictionaries containing class names and probabilities.
+        """
         model_result = model.predict(image, verbose=False)
 
+        # If no probabilities are found, return an empty list.
         if model_result[0].probs is None:
             return []
         
+         # Extract probabilities and class names from the model result.
         probs = model_result[0].probs.data
         class_names = model.names 
         
+        # Format the results into a list of dictionaries.
         result = [{"class_name": class_names[i], "probability": float(probs[i])} for i in range(len(probs))]
 
         return result
