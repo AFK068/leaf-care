@@ -2,7 +2,7 @@
 FROM python:3.12
 
 # Set work directory
-WORKDIR /app
+WORKDIR /app/mlcore
 
 # Copy requirements
 COPY ./requirements.txt .
