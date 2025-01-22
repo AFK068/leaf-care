@@ -1,7 +1,7 @@
 from PIL import Image
 import io
 import os
-from grpc_core.protos.predict import predict_pb2
+from mlcore.grpc_core.protos.predict import predict_pb2
 from PIL import Image
 from ultralytics import YOLO
 

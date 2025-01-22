@@ -2,9 +2,9 @@ import logging
 import grpc
 from ultralytics import YOLO
 
-from grpc_core.protos.predict import predict_pb2
-from grpc_core.protos.predict import predict_pb2_grpc
-from grpc_core.servers.handlers.predict import PredictHandler
+from mlcore.grpc_core.protos.predict import predict_pb2
+from mlcore.grpc_core.protos.predict import predict_pb2_grpc
+from mlcore.grpc_core.servers.handlers.predict import PredictHandler
 
 class PredictService(predict_pb2_grpc.PredictorServicer):
     """

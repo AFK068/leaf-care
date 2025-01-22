@@ -5,8 +5,8 @@ import grpc
 from dotenv import load_dotenv
 
 from settings import settings
-from grpc_core.protos.predict import predict_pb2_grpc
-from grpc_core.servers.services.predict import PredictService
+from mlcore.grpc_core.protos.predict import predict_pb2_grpc
+from mlcore.grpc_core.servers.services.predict import PredictService
 
 class Server:
     """
