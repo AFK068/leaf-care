@@ -3,9 +3,11 @@ from concurrent import futures
 import grpc
 from dotenv import load_dotenv
 
-from settings import settings
+from mlcore.settings import settings
+from mlcore.logger import logger
 from mlcore.grpc_core.protos.predict import predict_pb2_grpc
 from mlcore.grpc_core.servers.services.predict import PredictService
+
 
 class Server:
     """
@@ -33,6 +35,8 @@ class Server:
 
         # Bind the server to the specified address.
         self.server.add_insecure_port(self.server_address)
+
+        logger.info(f"gRPC server initialized and bound to {self.server_address}")
     
     def register(self) -> None:
         """
@@ -44,6 +48,8 @@ class Server:
         predict_pb2_grpc.add_PredictorServicer_to_server(
             PredictService(), self.server
         )
+
+        logger.info("PredictService registered with the gRPC server")
     
     def run(self) -> None:
         """
@@ -58,16 +64,19 @@ class Server:
         # Start the server.
         self.server.start()
 
+        logger.info("gRPC server started and is running...")
+
         # Keep the server running until termination.
         self.server.wait_for_termination()
 
+        logger.info("gRPC server has been terminated")
 
     def stop(self) -> None:
         """
         Stops the gRPC server.
-
-        - Stops the server immediately.
         """
         # Stop the server without waiting for ongoing requests to complete
         self.server.stop(grace=False)
+
+        logger.info("gRPC server stopped")
     

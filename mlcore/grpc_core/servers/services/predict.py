@@ -1,8 +1,10 @@
 import logging
 import grpc
 
+from mlcore.logger import logger
 from mlcore.grpc_core.protos.predict import predict_pb2, predict_pb2_grpc
 from mlcore.grpc_core.servers.handlers.predict import PredictHandler
+
 
 class PredictService(predict_pb2_grpc.PredictorServicer):
     """
@@ -24,15 +26,17 @@ class PredictService(predict_pb2_grpc.PredictorServicer):
 
         try:
             model = PredictHandler.get_or_create_model(plant_type)
+            logger.info(f"Model loaded successfully for plant type: {plant_type}")
         except ValueError as e:
             # Log the error and set gRPC status code and details.
+            logger.error(f"Invalid plant type: {e}")
             context.set_code(grpc.StatusCode.INVALID_ARGUMENT)
             context.set_details(f"Invalid plant type: {e}")
 
             return predict_pb2.PredictorReply(result=[])
 
         results = []
-        for image_data in request.image_data:
+        for idx, image_data in enumerate(request.image_data):
             try:
                 # Convert raw image data to a PIL Image.
                 image = PredictHandler.bytes_to_image(image_data)
@@ -44,10 +48,14 @@ class PredictService(predict_pb2_grpc.PredictorServicer):
                 image_results = PredictHandler.convert_to_class_probabilities(model_result)
 
                 results.append(image_results)
+
+                logger.info(f"Successfully processed image {idx + 1}")
                 
             except Exception:
+                logger.error(f"Error processing image {idx + 1}: {e}")
                 context.set_code(grpc.StatusCode.INTERNAL)
                 context.set_details(f"Error processing image: {e}")
+
                 return predict_pb2.PredictorReply(result=[])
         
         return predict_pb2.PredictorReply(result=results)

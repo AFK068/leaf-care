@@ -4,7 +4,9 @@ import os
 from PIL import Image
 from ultralytics import YOLO
 
+from mlcore.logger import logger
 from mlcore.grpc_core.protos.predict import predict_pb2
+
 
 class PredictHandler:
     """ 
@@ -25,6 +27,7 @@ class PredictHandler:
         if plant_type not in cls._models:
             path = cls.get_model_path(plant_type)
             cls._models[plant_type] = YOLO(path)
+            logger.info(f"Model loaded successfully for plant type: {plant_type}")
 
         return cls._models[plant_type]
     
@@ -36,6 +39,7 @@ class PredictHandler:
         :param image_data: Raw image data in bytes.
         :return: A PIL Image object.
         """
+        logger.debug("Converting raw image data to PIL Image")
         return Image.open(io.BytesIO(image_data))
     
     @staticmethod
@@ -46,7 +50,15 @@ class PredictHandler:
         :param plant_type: The type of plant.
         :return: The absolute path to the model file.
         """
-        BASE_MODEL_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir, os.path.pardir, os.path.pardir, 'models'))
+        BASE_MODEL_PATH = os.path.abspath(
+            os.path.join(
+                os.path.dirname(__file__),
+                os.path.pardir,
+                os.path.pardir,
+                os.path.pardir,
+                'models'
+            )
+        )
 
         model_paths = {
             predict_pb2.PLANT_CUCUMBER: 'cucumber_cls_model.pt',
@@ -57,8 +69,11 @@ class PredictHandler:
             predict_pb2.PLANT_TOMATO: 'tomatoe_cls_model.pt',
             predict_pb2.PLANT_WATERMELON: 'watermelon_cls_model.pt',
         }
+    
+        model_path = os.path.join(BASE_MODEL_PATH, model_paths[plant_type])
+        logger.debug(f"Resolved model path for plant type {plant_type}: {model_path}")
 
-        return os.path.join(BASE_MODEL_PATH, model_paths[plant_type])
+        return model_path
     
     @staticmethod
     def convert_to_class_probabilities(model_result):
@@ -68,6 +83,7 @@ class PredictHandler:
         :param model_result: A list of dictionaries containing class names and probabilities.
         :return: A protobuf message (predict_pb2.ImageResults) with the results.
         """
+        logger.debug("Converting model results to protobuf message")
         image_results = predict_pb2.ImageResults()
 
         # Iterate over the model results and populate the protobuf message.
@@ -76,7 +92,10 @@ class PredictHandler:
                 class_name=item["class_name"],
                 probability=item["probability"]
             )
+
             image_results.results.append(class_prob)
+
+        logger.debug("Successfully converted model results to protobuf message")
 
         return image_results
         
@@ -89,10 +108,12 @@ class PredictHandler:
         :param image: A PIL Image object to run predictions on.
         :return: A list of dictionaries containing class names and probabilities.
         """
+        logger.debug("Running model on the image")
         model_result = model.predict(image, verbose=False)
 
         # If no probabilities are found, return an empty list.
         if model_result[0].probs is None:
+            logger.warning("No probabilities found in model result")
             return []
         
          # Extract probabilities and class names from the model result.
@@ -100,6 +121,10 @@ class PredictHandler:
         class_names = model.names 
         
         # Format the results into a list of dictionaries.
-        result = [{"class_name": class_names[i], "probability": float(probs[i])} for i in range(len(probs))]
+        result = [
+            {"class_name": class_names[i], "probability": float(probs[i])} for i in range(len(probs))
+        ]
+
+        logger.debug("Model prediction completed successfully")
 
         return result
