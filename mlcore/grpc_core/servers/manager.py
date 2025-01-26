@@ -25,7 +25,6 @@ class Server:
         """
         # Set the server address using settings.
         self.server_address = f"{os.getenv("GRPC_HOST_LOCAL")}:{os.getenv("GRPC_PORT")}"
-        logger.info(f"########################### {os.getenv('GRPC_HOST_LOCAL')} | {os.getenv('GRPC_PORT')}")
 
         # Create a gRPC server with a thread pool executor.
         self.server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
