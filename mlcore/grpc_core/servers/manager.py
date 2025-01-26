@@ -1,9 +1,8 @@
 from concurrent import futures
 
 import grpc
-from dotenv import load_dotenv
+import os
 
-from mlcore.settings import settings
 from mlcore.logger import logger
 from mlcore.grpc_core.protos.predict import predict_pb2_grpc
 from mlcore.grpc_core.servers.services.predict import PredictService
@@ -24,11 +23,9 @@ class Server:
         - Sets the server address from settings.
         - Creates a gRPC server with a thread pool executor.
         """
-        # Load environment variables from .env file.
-        load_dotenv()
-
         # Set the server address using settings.
-        self.server_address = f"{settings.GRPC_HOST_LOCAL}:{settings.GRPC_PORT}"
+        self.server_address = f"{os.getenv("GRPC_HOST_LOCAL")}:{os.getenv("GRPC_PORT")}"
+        logger.info(f"########################### {os.getenv('GRPC_HOST_LOCAL')} | {os.getenv('GRPC_PORT')}")
 
         # Create a gRPC server with a thread pool executor.
         self.server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
