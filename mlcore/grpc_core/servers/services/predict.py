@@ -12,9 +12,10 @@ class PredictService(predict_pb2_grpc.PredictorServicer):
 
     It uses the PredictHandler to load models, process images, and return results.
     """
+
     def Predict(self, request, context):
         """
-        Handles the Predict RPC call. 
+        Handles the Predict RPC call.
 
         It processes the request, runs the model, and returns the prediction results.
 
@@ -45,17 +46,19 @@ class PredictService(predict_pb2_grpc.PredictorServicer):
                 model_result = PredictHandler.run_model(model, image)
 
                 # Convert the model results to a protobuf message.
-                image_results = PredictHandler.convert_to_class_probabilities(model_result)
+                image_results = PredictHandler.convert_to_class_probabilities(
+                    model_result
+                )
 
                 results.append(image_results)
 
                 logger.info(f"Successfully processed image {idx + 1}")
-                
+
             except Exception:
                 logger.error(f"Error processing image {idx + 1}: {e}")
                 context.set_code(grpc.StatusCode.INTERNAL)
                 context.set_details(f"Error processing image: {e}")
 
                 return predict_pb2.PredictorReply(result=[])
-        
+
         return predict_pb2.PredictorReply(result=results)

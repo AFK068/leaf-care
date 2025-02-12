@@ -15,6 +15,7 @@ class Server:
     It initializes the gRPC server, registers services, and provides methods
     to start and stop the server.
     """
+
     def __init__(self) -> None:
         """
         Initializes the gRPC server.
@@ -33,7 +34,7 @@ class Server:
         self.server.add_insecure_port(self.server_address)
 
         logger.info(f"gRPC server initialized and bound to {self.server_address}")
-    
+
     def register(self) -> None:
         """
         Registers gRPC services with the server.
@@ -41,12 +42,10 @@ class Server:
         - Adds the `PredictService` to the server.
         """
         # Register the PredictService with the server.
-        predict_pb2_grpc.add_PredictorServicer_to_server(
-            PredictService(), self.server
-        )
+        predict_pb2_grpc.add_PredictorServicer_to_server(PredictService(), self.server)
 
         logger.info("PredictService registered with the gRPC server")
-    
+
     def run(self) -> None:
         """
         Starts the gRPC server.
@@ -56,7 +55,7 @@ class Server:
         """
         # Register services before starting the server.
         self.register()
-        
+
         # Start the server.
         self.server.start()
 
@@ -75,4 +74,3 @@ class Server:
         self.server.stop(grace=False)
 
         logger.info("gRPC server stopped")
-    
