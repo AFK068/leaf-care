@@ -1,10 +1,11 @@
-import grpc
 import asyncio
-from grpc import aio
 from typing import Optional
 
+import grpc
+from grpc import aio
+
 from bot.logger import logger
-from bot.protos.predict import predict_pb2_grpc, predict_pb2
+from bot.protos.predict import predict_pb2, predict_pb2_grpc
 
 
 class PredictClient:
@@ -37,13 +38,14 @@ class PredictClient:
             # Wait for the connection to be established.
             # If the connection is not established within _connect_timeout second, raise an exception.
             await asyncio.wait_for(
-                self.channel.channel_ready(), timeout=self._connect_timeout
+                self.channel.channel_ready(),
+                timeout=self._connect_timeout,
             )
             logger.info(f"Connected to gRPC server at {self.host}:{self.port}")
         except asyncio.TimeoutError:
             raise ConnectionError(f"Connection timeout to {self.host}:{self.port}")
         except Exception as e:
-            logger.error(f"Connection error: {str(e)}", exc_info=True)
+            logger.error(f"Connection error: {e!s}", exc_info=True)
             raise ConnectionError(f"Failed to connect: {e}")
 
     @property
@@ -61,18 +63,22 @@ class PredictClient:
             logger.info("Connection to gRPC server closed.")
 
     async def predict(
-        self, images_data: list[bytes], plant_type: predict_pb2.Plant
+        self,
+        images_data: list[bytes],
+        plant_type: predict_pb2.Plant,
     ) -> predict_pb2.PredictorReply:
         if not self.connected:
             await self.connect()
 
         try:
             request = predict_pb2.PredictorRequest(
-                image_data=images_data, plant=plant_type
+                image_data=images_data,
+                plant=plant_type,
             )
 
             return await asyncio.wait_for(
-                self.stub.Predict(request), timeout=self._connect_timeout
+                self.stub.Predict(request),
+                timeout=self._connect_timeout,
             )
         except grpc.RpcError as e:
             error_mapping = {
