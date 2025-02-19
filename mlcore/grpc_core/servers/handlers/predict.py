@@ -4,13 +4,12 @@ import os
 from PIL import Image
 from ultralytics import YOLO
 
-from mlcore.logger import logger
 from mlcore.grpc_core.protos.predict import predict_pb2
+from mlcore.logger import logger
 
 
 class PredictHandler:
-    """
-    PredictHandler class is a handler for processing prediction requests.
+    """PredictHandler class is a handler for processing prediction requests.
 
     It manages loading models, running predictions, and converting results.
     """
@@ -19,8 +18,7 @@ class PredictHandler:
 
     @classmethod
     def get_or_create_model(cls, plant_type):
-        """
-        Retrieves or creates a YOLO model for the specified plant type.
+        """Retrieves or creates a YOLO model for the specified plant type.
 
         :param plant_type: The type of plant.
         :return: A YOLO model instance for the specified plant type.
@@ -34,8 +32,7 @@ class PredictHandler:
 
     @staticmethod
     def bytes_to_image(image_data):
-        """
-        Converts raw image bytes into a PIL Image object.
+        """Converts raw image bytes into a PIL Image object.
 
         :param image_data: Raw image data in bytes.
         :return: A PIL Image object.
@@ -45,8 +42,7 @@ class PredictHandler:
 
     @staticmethod
     def get_model_path(plant_type):
-        """
-        Returns the file path to the model for the specified plant type.
+        """Returns the file path to the model for the specified plant type.
 
         :param plant_type: The type of plant.
         :return: The absolute path to the model file.
@@ -58,7 +54,7 @@ class PredictHandler:
                 os.path.pardir,
                 os.path.pardir,
                 "models",
-            )
+            ),
         )
 
         model_paths = {
@@ -78,8 +74,7 @@ class PredictHandler:
 
     @staticmethod
     def convert_to_class_probabilities(model_result):
-        """
-        Converts the raw model results into a structured format (protobuf message).
+        """Converts the raw model results into a structured format (protobuf message).
 
         :param model_result: A list of dictionaries containing class names and probabilities.
         :return: A protobuf message (predict_pb2.ImageResults) with the results.
@@ -90,7 +85,8 @@ class PredictHandler:
         # Iterate over the model results and populate the protobuf message.
         for item in model_result:
             class_prob = predict_pb2.ClassProbability(
-                class_name=item["class_name"], probability=item["probability"]
+                class_name=item["class_name"],
+                probability=item["probability"],
             )
 
             image_results.results.append(class_prob)
@@ -101,8 +97,7 @@ class PredictHandler:
 
     @staticmethod
     def run_model(model, image):
-        """
-        Runs the YOLO model on the provided image and returns the results.
+        """Runs the YOLO model on the provided image and returns the results.
 
         :param model: A YOLO model instance.
         :param image: A PIL Image object to run predictions on.

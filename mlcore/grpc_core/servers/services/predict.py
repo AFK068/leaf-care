@@ -1,21 +1,18 @@
-import logging
 import grpc
 
-from mlcore.logger import logger
 from mlcore.grpc_core.protos.predict import predict_pb2, predict_pb2_grpc
 from mlcore.grpc_core.servers.handlers.predict import PredictHandler
+from mlcore.logger import logger
 
 
 class PredictService(predict_pb2_grpc.PredictorServicer):
-    """
-    PredictService class is a gRPC service that handles prediction requests.
+    """PredictService class is a gRPC service that handles prediction requests.
 
     It uses the PredictHandler to load models, process images, and return results.
     """
 
     def Predict(self, request, context):
-        """
-        Handles the Predict RPC call.
+        """Handles the Predict RPC call.
 
         It processes the request, runs the model, and returns the prediction results.
 
@@ -47,14 +44,14 @@ class PredictService(predict_pb2_grpc.PredictorServicer):
 
                 # Convert the model results to a protobuf message.
                 image_results = PredictHandler.convert_to_class_probabilities(
-                    model_result
+                    model_result,
                 )
 
                 results.append(image_results)
 
                 logger.info(f"Successfully processed image {idx + 1}")
 
-            except Exception:
+            except Exception as e:
                 logger.error(f"Error processing image {idx + 1}: {e}")
                 context.set_code(grpc.StatusCode.INTERNAL)
                 context.set_details(f"Error processing image: {e}")
