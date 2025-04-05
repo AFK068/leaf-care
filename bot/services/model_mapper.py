@@ -10,12 +10,12 @@ class ModelMapper:
     """
 
     PLANT_TYPE_MAPPING: ClassVar[dict[str, predict_pb2.Plant]] = {
-        "Помидор": predict_pb2.PLANT_TOMATO,
-        "Огурец": predict_pb2.PLANT_CUCUMBER,
-        "Дыня": predict_pb2.PLANT_MELON,
-        "Арбуз": predict_pb2.PLANT_WATERMELON,
-        "Клубника": predict_pb2.PLANT_STRAWBERRY,
-        "Перец": predict_pb2.PLANT_PEPPER,
+        "помидор": predict_pb2.PLANT_TOMATO,
+        "огурец": predict_pb2.PLANT_CUCUMBER,
+        "дыня": predict_pb2.PLANT_MELON,
+        "арбуз": predict_pb2.PLANT_WATERMELON,
+        "клубника": predict_pb2.PLANT_STRAWBERRY,
+        "перец": predict_pb2.PLANT_PEPPER,
     }
 
     @classmethod
@@ -25,8 +25,11 @@ class ModelMapper:
         :param plant_name: The name of the plant.
         :return: The corresponding Plant enum value.
         """
+        plant_name = plant_name.strip()
+        plant_name = plant_name.lower()
+
         plant_type = cls.PLANT_TYPE_MAPPING.get(plant_name)
-        if not plant_type:
+        if plant_type is None:
             error_msg = f"Unknown plant name: {plant_name}"
             raise ValueError(error_msg)
         return plant_type
