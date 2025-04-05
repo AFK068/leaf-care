@@ -63,7 +63,7 @@ class PredictHandler:
             predict_pb2.PLANT_PEPPER: "pepper_cls_model.pt",
             predict_pb2.PLANT_SALAD: "salad_cls_model.pt",
             predict_pb2.PLANT_STRAWBERRY: "strawberrie_cls_model.pt",
-            predict_pb2.PLANT_TOMATO: "tomatoe_cls_model.pt",
+            predict_pb2.PLANT_TOMATO: "tomato_cls_model.pt",
             predict_pb2.PLANT_WATERMELON: "watermelon_cls_model.pt",
         }
 
