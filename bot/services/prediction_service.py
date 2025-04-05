@@ -1,5 +1,7 @@
 from typing import Any
 
+import grpc
+
 from bot.logger import logger
 from bot.protos.predict import predict_pb2
 from bot.services.model_mapper import ModelMapper
@@ -64,5 +66,9 @@ class PredictionService:
                 return result
         except ValueError as e:
             _raise_error(e, f"Invalid plant type: {e}", ValueError)
+        except ConnectionError as e:
+            _raise_error(e, f"Connection error: {e}", ConnectionError)
+        except grpc.RpcError as e:
+            _raise_error(e, f"gRPC error: {e.code()} - {e.details()}",grpc.RpcError)
         except Exception as e:
             _raise_error(e, f"Error during prediction: {e}", RuntimeError)
