@@ -1,5 +1,11 @@
-from .detect_service import DetectHandler
-from .model_mapper import ModelMapper
-from .photo_processor import PhotoProcessor
-from .predict_client import PredictClient
-from .prediction_service import PredictionService
+from .detection import DetectHandler, PhotoProcessor
+from .grpc import PredictClient, PredictionService
+from .mapping import ModelMapper
+
+__all__ = [
+    "DetectHandler",
+    "ModelMapper",
+    "PhotoProcessor",
+    "PredictClient",
+    "PredictionService",
+]

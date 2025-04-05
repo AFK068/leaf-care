@@ -4,8 +4,8 @@ import grpc
 
 from bot.logger import logger
 from bot.protos.predict import predict_pb2
-from bot.services.model_mapper import ModelMapper
-from bot.services.predict_client import PredictClient
+from bot.services.grpc.predict_client import PredictClient
+from bot.services.mapping.plant_mapper import ModelMapper
 from bot.settings import settings
 
 
