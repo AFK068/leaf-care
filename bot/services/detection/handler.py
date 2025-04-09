@@ -1,7 +1,10 @@
 import asyncio
+import tempfile
 from typing import Optional
 
 import cv2
+import numpy as np
+from aiogram.types import FSInputFile
 from cv2.typing import MatLike
 from ultralytics import YOLO
 from ultralytics.engine.results import Results
@@ -71,21 +74,41 @@ class DetectHandler:
         _, buffer = cv2.imencode(".jpg", cropped_image)
         return buffer.tobytes()
 
-    async def detect(self, image_path: str) -> list[bytes]:
-        """Detect objects in the image at the given path.
+    def _draw_boxes(self, image: np.ndarray, results: Results) -> np.ndarray:
+        for box in results.boxes:
+            x1, y1, x2, y2 = map(int, box.xyxy[0])
+            cv2.rectangle(image, (x1, y1), (x2, y2), (255, 0, 0), 2)
+
+            confidence = None
+            if hasattr(box, "conf") and box.conf is not None:
+                try:
+                    confidence = float(box.conf[0])
+                except Exception as e:
+                    logger.error(f"Error extracting confidence: {e}", exc_info=True)
+
+            if confidence is not None:
+                label = f"leaf {confidence * 100:.1f}%"
+            else:
+                label = "leaf"
+
+            cv2.putText(image, label, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX,
+                        0.5, (255, 0, 0), 1, cv2.LINE_AA)
+        return image
+
+
+    async def detect(self, image_path: str) -> tuple[list[bytes], FSInputFile]:
+        """Detect objects in the image.
 
         Args:
             image_path (str): Path to the image file.
 
         Returns:
-            list[bytes]: List of cropped images as byte arrays.
+            tuple: A tuple containing a list of cropped images and a photo file.
 
         """
         if self._model is None:
             logger.error("Model is not loaded.")
-
-            error_message = "Model not loaded."
-            raise ValueError(error_message)
+            raise ValueError("Model not loaded.")
 
         try:
             result = self._model.predict(
@@ -96,10 +119,23 @@ class DetectHandler:
             )
 
             image = cv2.imread(image_path)
-            return await self._process_results(result[0], image)
+            if image is None:
+                raise RuntimeError(f"Failed to load image from path: {image_path}")
 
+            image_with_boxes = self._draw_boxes(image, result[0])
+
+            with tempfile.NamedTemporaryFile(delete=False, suffix=".jpg") as temp_file:
+                cv2.imwrite(temp_file.name, image_with_boxes)
+                logger.info(f"Annotated image saved to temporary file: {temp_file.name}")
+
+                photo = FSInputFile(temp_file.name)
+
+            cropped_boxes = await self._process_results(result[0], image)
+            logger.info(f"Processed {len(cropped_boxes)} cropped objects.")
+
+            cropped_boxes = await self._process_results(result[0], image)
         except Exception as e:
-            logger.error(f"Detect error: {e!s}", exc_info=True)
-
-            error_message = ("Error while processing the image")
-            raise RuntimeError(error_message) from e
+            logger.error(f"Error during detection: {e}", exc_info=True)
+            raise RuntimeError("Error processing the image") from e
+        else:
+            return cropped_boxes, photo
