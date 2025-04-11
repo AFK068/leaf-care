@@ -5,15 +5,17 @@ services:
     build:
       context: ./bot
       dockerfile: ./Dockerfile
+    environment:
+      - BOT_TOKEN=${BOT_TOKEN}
     ports:
       - "50053:50053"
     depends_on:
       - mlcore1
       - mlcore2
       - nginx
-      
+
   mlcore1:
-    build: 
+    build:
       context: ./mlcore
       dockerfile: ./Dockerfile
     environment:
@@ -24,7 +26,7 @@ services:
     container_name: mlcore1
 
   mlcore2:
-    build: 
+    build:
       context: ./mlcore
       dockerfile: ./Dockerfile
     environment:
