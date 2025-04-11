@@ -18,11 +18,6 @@ class PredictHandler:
 
     @classmethod
     def get_or_create_model(cls, plant_type):
-        """Retrieves or creates a YOLO model for the specified plant type.
-
-        :param plant_type: The type of plant.
-        :return: A YOLO model instance for the specified plant type.
-        """
         if plant_type not in cls._models:
             path = cls.get_model_path(plant_type)
             cls._models[plant_type] = YOLO(path)
@@ -32,21 +27,11 @@ class PredictHandler:
 
     @staticmethod
     def bytes_to_image(image_data):
-        """Converts raw image bytes into a PIL Image object.
-
-        :param image_data: Raw image data in bytes.
-        :return: A PIL Image object.
-        """
         logger.debug("Converting raw image data to PIL Image")
         return Image.open(io.BytesIO(image_data))
 
     @staticmethod
     def get_model_path(plant_type):
-        """Returns the file path to the model for the specified plant type.
-
-        :param plant_type: The type of plant.
-        :return: The absolute path to the model file.
-        """
         BASE_MODEL_PATH = os.path.abspath(
             os.path.join(
                 os.path.dirname(__file__),
@@ -74,11 +59,6 @@ class PredictHandler:
 
     @staticmethod
     def convert_to_class_probabilities(model_result):
-        """Converts the raw model results into a structured format (protobuf message).
-
-        :param model_result: A list of dictionaries containing class names and probabilities.
-        :return: A protobuf message (predict_pb2.ImageResults) with the results.
-        """
         logger.debug("Converting model results to protobuf message")
         image_results = predict_pb2.ImageResults()
 
@@ -97,12 +77,6 @@ class PredictHandler:
 
     @staticmethod
     def run_model(model, image):
-        """Runs the YOLO model on the provided image and returns the results.
-
-        :param model: A YOLO model instance.
-        :param image: A PIL Image object to run predictions on.
-        :return: A list of dictionaries containing class names and probabilities.
-        """
         logger.debug("Running model on the image")
         model_result = model.predict(image, verbose=False)
 

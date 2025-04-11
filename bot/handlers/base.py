@@ -11,12 +11,7 @@ base_router = Router(name=__name__)
 
 @base_router.message(CommandStart())
 async def cmd_start(message: Message, state: FSMContext) -> None:
-    """Handle the /start command.
-
-    Clear the state and send a welcome message to the user.
-    """
     await state.clear()
-
     logger.info(f"User with ID: {message.from_user.id} started bot")
 
     await message.answer(
@@ -33,10 +28,6 @@ async def cmd_start(message: Message, state: FSMContext) -> None:
 
 @base_router.message(Command("help"))
 async def cmd_help(message: Message, state: FSMContext) -> None:
-    """Handle the /help command.
-
-    Clear the state and send a help message to the user.
-    """
     await state.clear()
     logger.info(f"User with ID: {message.from_user.id} requested help")
 

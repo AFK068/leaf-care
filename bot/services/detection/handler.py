@@ -23,29 +23,11 @@ class DetectHandler:
     _lock = asyncio.Lock()
 
     def __init__(self, model_path: str) -> None:
-        """Initialize the DetectHandler with the model path.
-
-        Args:
-            model_path (str): Path to the model file.
-
-        """
         self.model_path = model_path
         self._load_model()
 
     @classmethod
     async def get_instance(cls, model_path: str) -> "DetectHandler":
-        """Get an instance of DetectHandler.
-
-        If the instance does not exist, it will be created.
-        If the model is not loaded, it will be loaded.
-
-        Args:
-            model_path (str): Path to the model file.
-
-        Returns:
-            DetectHandler: An instance of DetectHandler.
-
-        """
         async with cls._lock:
             if cls._model is None:
                 cls._instance = cls(model_path)

@@ -10,7 +10,7 @@ from aiogram import Dispatcher
 from bot.bot_instance import instance_bot
 from bot.logger import logger
 from bot.routers import main_router
-from bot.services.predict_client import PredictClient
+from bot.services.grpc.prediction import PredictClient
 from bot.settings import settings
 
 

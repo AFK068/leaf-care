@@ -21,14 +21,6 @@ class PredictClient:
     def __init__(
         self, host: str, port: str, channel: Optional[aio.Channel] = None,
     ) -> None:
-        """Initialize the gRPC client.
-
-        Args:
-            host (str): The host of the gRPC server.
-            port (str): The port of the gRPC server.
-            channel (aio.Channel, optional): An existing gRPC channel. Defaults to None.
-
-        """
         self.host = host
         self.port = port
         self.channel = channel or aio.insecure_channel(f"{self.host}:{self.port}")
@@ -37,19 +29,6 @@ class PredictClient:
 
     @classmethod
     async def get_instance(cls, host: str, port: str) -> "PredictClient":
-        """Get an instance of PredictClient.
-
-        If the instance does not exist, it will be created.
-        If the channel is not connected, it will be connected.
-
-        Args:
-            host (str): The host of the gRPC server.
-            port (str): The port of the gRPC server.
-
-        Returns:
-            PredictClient: An instance of PredictClient.
-
-        """
         async with cls._lock:
             if cls._instance is None:
                 cls._instance = cls(host, port)
@@ -57,12 +36,6 @@ class PredictClient:
             return cls._instance
 
     async def connect(self) -> None:
-        """Connect to the gRPC server.
-
-        Raises:
-            ConnectionError: If there is a connection error.
-
-        """
         if self.connected:
             return
 
@@ -85,12 +58,6 @@ class PredictClient:
 
     @property
     def connected(self) -> bool:
-        """Check if the gRPC channel is connected.
-
-        Returns:
-            bool: True if the channel is connected, False otherwise.
-
-        """
         return (
             self.channel is not None
             and self.channel.get_state() == grpc.ChannelConnectivity.READY

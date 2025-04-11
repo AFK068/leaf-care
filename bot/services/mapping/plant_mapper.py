@@ -20,11 +20,6 @@ class ModelMapper:
 
     @classmethod
     def get_plant_type(cls, plant_name: str) -> predict_pb2.Plant:
-        """Map a plant name to its corresponding Plant enum value.
-
-        :param plant_name: The name of the plant.
-        :return: The corresponding Plant enum value.
-        """
         plant_name = plant_name.strip()
         plant_name = plant_name.lower()
 
