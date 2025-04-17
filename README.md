@@ -107,7 +107,7 @@ Telegram bot that allows you to identify diseases of a certain list of plants by
 
 ### [Anthracnose](https://plantwiseplusknowledgebank.org/doi/10.1079/pwkb.20157800697#:~:text=Anthracnose%20damage%20on%20melon%20fruits,sunken%20with%20a%20yellowish%20colour.)
 <p align="center">
-    <img src="https://plantwiseplusknowledgebank.org/cms/10.1079/pwkb.20157800697/asset/ee66525f-65e2-46d8-af6a-39efb24a900c/assets/graphic/6517f297-6b1c-4795-adbe-3c3c8a9352cf.png" alt="Anthracnose" width="300">
+    <img src="https://s3-us-west-1.amazonaws.com/sg-production-public/data/images/508/files/big_anthracnose.jpg" width="300">
 </p>
 
 ---
