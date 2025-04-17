@@ -1,6 +1,6 @@
 # About 
 
-Telegram bot that allows you to identify diseases of a certain list of plants by a photo of a leaf.
+Telegram bot [@Leaf_care_bot](https://t.me/Leaf_care_bot)  that allows you to identify diseases of a certain list of plants by a photo of a leaf.
 
 <p align="center">
     <img src="./assets/use.gif" alt="Demo">
@@ -9,6 +9,35 @@ Telegram bot that allows you to identify diseases of a certain list of plants by
 # Architecture
 
 ![Architecture](./assets/architecture.png)
+
+# 🌿 Disease Detection Pipeline
+
+When a user sends an image of a potentially diseased plant, the following process is initiated:
+
+1. **Leaf Detection (YOLOv11):**  
+   The system first applies a YOLO-based leaf detection model ([YOLO](https://docs.ultralytics.com/ru/models/yolo11/)) to identify plant leaves in the image.
+
+   <p align="center">
+       <img src="assets/detect.jpg" alt="Bacterial spot" width="500">
+   </p>
+
+2. **Leaf Cropping:**  
+   If at least one leaf is detected, each detected leaf is cropped from the image. A list of cropped leaf images is generated for further analysis.
+
+3. **Load Balancing and Classification (gRPC + NGINX):**  
+   The cropped leaf images are sent via **gRPC** to an **NGINX** load balancer, which distributes the processing load across multiple identical classification servers running in parallel. This ensures scalability and speeds up inference time.
+
+4. **Disease Classification:**  
+   Each cropped leaf image is processed by machine learning models trained for **multi-class classification** of diseases. The classification results for all leaves are aggregated and sent back to the client (i.e., the bot).
+
+5. **Result Aggregation and Decision Making (Bot):**  
+   The bot aggregates probabilities across all detected leaves. If the probability that the plant is **healthy** is high enough, the bot informs the user but still provides the **top 3 most probable diagnoses** as a precaution.
+
+   If the plant is likely **diseased**, the bot explicitly informs the user and provides the top 3 most probable diseases. For each suggested disease, it includes:
+   - 📖 Name of the disease
+   - 📷 An example image of the disease for comparison
+   - 🔗 A link to a detailed article explaining the disease
+
 
 # Classes
 ## 🍅 Tomato
