@@ -1,6 +1,6 @@
 # About 
 
-Telegram bot that allows you to identify diseases of a certain list of plants by a photo of a leaf.
+Telegram bot [@Leaf_care_bot](https://t.me/Leaf_care_bot)  that allows you to identify diseases of a certain list of plants by a photo of a leaf.
 
 <p align="center">
     <img src="./assets/use.gif" alt="Demo">
