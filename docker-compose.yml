@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  bot:
+    build:
+      context: ./bot
+      dockerfile: ./Dockerfile
+    environment:
+      - BOT_TOKEN=${BOT_TOKEN}
+    ports:
+      - "50053:50053"
+    depends_on:
+      - mlcore1
+      - mlcore2
+      - nginx
+
+  mlcore1:
+    build:
+      context: ./mlcore
+      dockerfile: ./Dockerfile
+    environment:
+      - GRPC_HOST_LOCAL=0.0.0.0
+      - GRPC_PORT=50051
+    ports:
+      - "50051:50051"
+    container_name: mlcore1
+
+  mlcore2:
+    build:
+      context: ./mlcore
+      dockerfile: ./Dockerfile
+    environment:
+      - GRPC_HOST_LOCAL=0.0.0.0
+      - GRPC_PORT=50052
+    ports:
+      - "50052:50052"
+    container_name: mlcore2
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - mlcore1
+      - mlcore2
+    restart: always

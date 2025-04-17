@@ -1,0 +1,200 @@
+{
+    "помидор": {
+        "diseases": [
+            {
+                "class_name": "Tomato___Bacterial_spot",
+                "description": "Черная бактериальная пятнистость томата",
+                "photo_url": "https://hort.extension.wisc.edu/files/2017/03/Bacterial-spot-on-tomato-leaves-e1721249493890.jpg",
+                "reference_url": "https://hort.extension.wisc.edu/articles/bacterial-spot-of-tomato/"
+            },
+            {
+                "class_name": "Tomato___Early_blight",
+                "description": "Ранняя гниль томата",
+                "photo_url": "https://www.missouribotanicalgarden.org/Portals/0/Gardening/Gardening%20Help/images/Pests/Pest2369.jpg",
+                "reference_url": "https://www.missouribotanicalgarden.org/gardens-gardening/your-garden/help-for-the-home-gardener/advice-tips-resources/insects-pests-and-problems/diseases/fungal-spots/early-blight-of-tomato"
+            },
+            {
+                "class_name": "Tomato___Late_blight",
+                "description": "Фитофтороз томата",
+                "photo_url": "https://content.peat-cloud.com/w400/tomato-late-blight-tomato-1556463954.jpg",
+                "reference_url": "https://vegpath.plantpath.wisc.edu/diseases/tomato-late-blight/"
+            },
+            {
+                "class_name": "Tomato___Leaf_Mold",
+                "description": "Бурая пятнистость томата",
+                "photo_url": "https://extension.umn.edu/sites/extension.umn.edu/files/tomato-leaf-mold.jpg",
+                "reference_url": "https://extension.umn.edu/disease-management/tomato-leaf-mold"
+            },
+            {
+                "class_name": "Tomato___Septoria_leaf_spot",
+                "description": "Септориоз томата",
+                "photo_url": "https://www.missouribotanicalgarden.org/Portals/0/Gardening/Gardening%20Help/images/Pests/Septoria_Leaf_Spot_of_Tomato186.jpg",
+                "reference_url": "https://www.missouribotanicalgarden.org/gardens-gardening/your-garden/help-for-the-home-gardener/advice-tips-resources/insects-pests-and-problems/diseases/fungal-spots/septoria-leaf-spot-of-tomato"
+            },
+            {
+                "class_name": "Tomato___Spider_mites Two-spotted_spider_mite",
+                "description": "Двупятнистый паутинный клещ",
+                "photo_url": "https://entomology.ca.uky.edu/files/inline-images/310a.jpg?itok=1J_F2GXG",
+                "reference_url": "https://entomology.ca.uky.edu/ef310"
+            },
+            {
+                "class_name": "Tomato___Target_Spot",
+                "description": "Целевая пятнистость томата",
+                "photo_url": "https://apps.lucidcentral.org/pppw_v10/images/entities/tomato_target_spot_163/img_4795.jpg",
+                "reference_url": "https://www.vegetables.bayer.com/ca/en-ca/resources/agronomic-spotlights/target-spot-of-tomato.html"
+            },
+            {
+                "class_name": "Tomato___Tomato_Yellow_Leaf_Curl_Virus",
+                "description": "Вирус жёлтой курчавости листьев томата",
+                "photo_url": "https://source.roboflow.com/i0iadecycQWNql6Gvk8vUECFpZH3/m4AKB7sZ5GcnjStMWJgA/thumb.jpg",
+                "reference_url": "https://agriculture.vic.gov.au/biosecurity/plant-diseases/vegetable-diseases/tomato-yellow-leaf-curl-virus"
+            },
+            {
+                "class_name": "Tomato___Tomato_mosaic_virus",
+                "description": "Вирус мозаики томата",
+                "photo_url": "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcTXGHj1MECzKsiaMcrjVJT2BKGkKY0euFAmRdkGKhk6W9TS84qkKuO1yqCDtrDk0uCnPK3YV6KmTEOiMODbsXXt7gn7iN2RtxqdYIBXRg",
+                "reference_url": "https://en.wikipedia.org/wiki/Tomato_mosaic_virus"
+            },
+            {
+                "class_name": "Tomato___healthy",
+                "description": "",
+                "photo_url": "",
+                "reference_url": ""
+            }
+        ]
+    },
+    "огурец": {
+        "diseases": [
+            {
+                "class_name": "Anthracnose",
+                "description": "Антракноз огурца",
+                "photo_url": "https://cdn.mos.cms.futurecdn.net/dYHfbiytbsKMxicbRhK4x3-768-80.jpg.webp",
+                "reference_url": "https://www.gardeningknowhow.com/edible/vegetables/cucumber/anthracnose-control-in-cucumbers.htm"
+            },
+            {
+                "class_name": "Bacterial Wilt",
+                "description": "Бактериальное увядание огурца",
+                "photo_url": "https://hort.extension.wisc.edu/files/2021/02/Bacterial_Wilt_of_Cucurbits.jpg",
+                "reference_url": "https://www.missouribotanicalgarden.org/gardens-gardening/your-garden/help-for-the-home-gardener/advice-tips-resources/insects-pests-and-problems/diseases/bacterial-spots/bacterial-wilt-of-cucumber"
+            },
+            {
+                "class_name": "Downy Mildew",
+                "description": "Ложная мучнистая роса",
+                "photo_url": "https://extension.umn.edu/sites/extension.umn.edu/files/cucumber-leaf-mildew.jpg",
+                "reference_url": "https://www.ontario.ca/page/downy-mildew-greenhouse-cucumber"
+            },
+            {
+                "class_name": "Gummy Stem Blight",
+                "description": "Черная гниль тыквенных",
+                "photo_url": "https://apps.lucidcentral.org/pppw_v10/images/entities/cucumber_gummy_stem_blight_201/diyleafgh.jpg",
+                "reference_url": "https://www.ontario.ca/page/gummy-stem-blight-greenhouse-cucumber#:~:text=Gummy%20stem%20blight%20is%20a,is%20also%20called%20mycosphaerella%20rot."
+            },
+            {
+                "class_name": "Healthy ",
+                "description": "",
+                "photo_url": "",
+                "reference_url": ""
+            }
+        ]
+    },
+    "дыня": {
+        "diseases": [
+            {
+                "class_name": "anthracnose",
+                "description": "Антракноз дыни",
+                "photo_url": "https://s3-us-west-1.amazonaws.com/sg-production-public/data/images/508/files/big_anthracnose.jpg",
+                "reference_url": "https://plantwiseplusknowledgebank.org/doi/10.1079/pwkb.20157800697#:~:text=Anthracnose%20damage%20on%20melon%20fruits,sunken%20with%20a%20yellowish%20colour."
+            },
+            {
+                "class_name": "downy_mildew",
+                "description": "Ложная мучнистая роса",
+                "photo_url": "https://lh3.googleusercontent.com/proxy/j_5PmjDpL4Gkd7NGIuJ-0RjteQb8BdZ3nW98BdgpXsKCQQklMRwgSCkPgjVn6XgeX5DgBGc0WlzJAWStbOiVtGkGBPDcypAxWyhFUAKDrXA_7xKXRJwyrI2arrmTnM0",
+                "reference_url": "https://extension.umn.edu/disease-management/downy-mildew-cucurbits"
+            }
+        ]
+    },
+    "арбуз": {
+        "diseases": [
+            {
+                "class_name": "Downy_Mildew",
+                "description": "Ложная мучнистая роса",
+                "photo_url": "https://vegcropshotline.org/wp-content/uploads/2016/02/602-113-0.jpg",
+                "reference_url": "https://www.vegetables.bayer.com/language-masters/en-us/resources/growing-tips-and-innovation-articles/agronomic-spotlights/watermelon-downy-mildew.html"
+            },
+            {
+                "class_name": "Healthy",
+                "description": "",
+                "photo_url": "",
+                "reference_url": ""
+            },
+            {
+                "class_name": "Mosaic_Virus",
+                "description": "Вирус мозаики арбуза",
+                "photo_url": "https://extension.usu.edu/planthealth/ipm/images/agricultural/vegetables/Watermelon-mosaic-virus-2apumpkin.jpg",
+                "reference_url": "https://en.wikipedia.org/wiki/Watermelon_mosaic_virus"
+            }
+        ]
+    },
+    "клубника": {
+        "diseases": [
+            {
+                "class_name": "Calciumdeficiency",
+                "description": "Дефицит кальция",
+                "photo_url": "https://ucanr.edu/sites/default/files/styles/ex/public/2012-12/158006.jpg.webp?itok=A-zoJo2Z",
+                "reference_url": "https://ucanr.edu/site/strawberry-disorders-identification-management/calcium-deficiency"
+            },
+            {
+                "class_name": "angular_leafspot",
+                "description": "Бактериальная угловатая пятнистость",
+                "photo_url": "https://plant-pest-advisory.rutgers.edu/wp-content/uploads/2013/10/BLS-Leaf-300x199.jpg",
+                "reference_url": "https://ohioline.osu.edu/factsheet/HYG-3212-11"
+            },
+            {
+                "class_name": "healthy",
+                "description": "",
+                "photo_url": "",
+                "reference_url": ""
+            },
+            {
+                "class_name": "leaf_spot",
+                "description": "Пятнистость листьев клубники",
+                "photo_url": "https://hort.extension.wisc.edu/files/2024/08/Common_Leaf_Spot_of_Strawberry.jpg",
+                "reference_url": "https://hort.extension.wisc.edu/articles/common-leaf-spot-of-strawberry/"
+            },
+            {
+                "class_name": "powdery_mildew",
+                "description": "Mучнистая роса клубники",
+                "photo_url": "https://blogs.cornell.edu/berrytool/files/2017/01/strpm30-opt-2-1yl0vby.jpg",
+                "reference_url": "https://blogs.cornell.edu/berrytool/strawberries/powdery-mildew/"
+            }
+        ]
+    },
+    "перец": {
+        "diseases": [
+            {
+                "class_name": "pepper_bell_bacterial_spot",
+                "description": "Бактериальная пятнистость перца",
+                "photo_url": "https://extension.wvu.edu/files/50d2bf3d-125f-4b45-9c03-487959bd8344/893x595?cb=0862b40bec913b574f1f05f79f2805c7",
+                "reference_url": "https://extension.wvu.edu/lawn-gardening-pests/plant-disease/fruit-vegetable-diseases/bacterial-leaf-spot-of-pepper"
+            },
+            {
+                "class_name": "pepper_healthy",
+                "description": "",
+                "photo_url": "",
+                "reference_url": ""
+            },
+            {
+                "class_name": "pepper_leaf_blight",
+                "description": "Фитофтороз перца",
+                "photo_url": "https://upload.wikimedia.org/wikipedia/commons/9/90/Phytophthora_leaf_blight_of_taro_%28Colocasia_esculenta%29_%2814833256493%29.jpg",
+                "reference_url": "https://www.pepperhub.in/what-is-leaf-blight/?srsltid=AfmBOoqZQQ5W2BkjVZgPebhF6cK_uZg9Mltvui2Ekc2yj6fQculZTH01"
+            },
+            {
+                "class_name": "pepper_yellow_mottle_virus",
+                "description": "Вирус желтой крапчатости перца",
+                "photo_url": "https://media.springernature.com/lw1200/springer-static/image/art%3A10.1007%2Fs13337-021-00686-3/MediaObjects/13337_2021_686_Fig1_HTML.jpg",
+                "reference_url": "https://www.sciencedirect.com/science/article/abs/pii/S2452014422001881#:~:text=The%20piper%20yellow%20mottle%20virus,it%20causes%20the%20stunt%20disease."
+            }
+        ]
+    }
+}
